@@ -1,0 +1,39 @@
+name: RSS通知
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # 5分ごとに実行
+  workflow_dispatch:        # 手動実行ボタンも有効化
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: feedparser インストール
+        run: pip install feedparser
+
+      - name: 既読リストを復元
+        uses: actions/cache@v4
+        with:
+          path: seen_entries.json
+          key: seen-entries-${{ github.run_id }}
+          restore-keys: seen-entries-
+
+      - name: RSS通知スクリプト実行
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python rss_notify.py
+
+      - name: 既読リストを保存
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: seen_entries.json
+          key: seen-entries-${{ github.run_id }}

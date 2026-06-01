@@ -1,0 +1,6 @@
+seen_entries.json
+*.log
+__pycache__/
+*.pyc
+.env
+setup.sh
