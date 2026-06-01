@@ -49,7 +49,7 @@ def send_email(subject: str, body: str):
     """Gmailでメール送信"""
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = FROM_EMAIL
+    msg["From"] = f"channel-tono <{FROM_EMAIL}>"
     msg["To"] = TO_EMAIL
 
     msg.attach(MIMEText(body, "plain", "utf-8"))
