@@ -2,8 +2,10 @@ name: RSS通知
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 5分ごとに実行
-  workflow_dispatch:        # 手動実行ボタンも有効化
+    - cron: '*/5 * * * *'  # 5分ごとに実行（バックアップ）
+  workflow_dispatch:        # 手動実行ボタン
+  repository_dispatch:      # 外部から叩く用
+    types: [rss-check]
 
 jobs:
   notify:
