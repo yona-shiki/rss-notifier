@@ -2,7 +2,7 @@ name: RSS通知
 
 on:
   schedule:
-    - cron: '1/5 * * * *'  # 毎時1分・6分・11分…に実行（高負荷時間帯を回避）
+    # - cron: '1/5 * * * *'  # GitHub scheduleは不安定なため無効化（cron-job.orgで代替）
   workflow_dispatch:        # 手動実行ボタン
   repository_dispatch:      # 外部から叩く用
     types: [rss-check]
